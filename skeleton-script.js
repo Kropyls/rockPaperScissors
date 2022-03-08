@@ -6,6 +6,12 @@ pick one of the 3 for computer selection
 
 */
 
+function computerPlay(){
+  let choices = ['rock','paper','scissors'];
+  let select = choices[math.floor(math.random()*choices.length)];
+  return select;
+}
+
 function playRound(playerSelection, computerSelection) {
   playerSelection.toLowerCase();
   if ((playerSelection == "rock") || (playerSelection == "scissors") || (playerSelection == "paper"))
