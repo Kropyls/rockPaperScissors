@@ -23,11 +23,7 @@ function end_message(result,winpick,losepick){
 function playRound(playerSelection, computerSelection){
   playerSelection = playerSelection.toLowerCase();
   //evaluates player input for validity
-  if (
-      (playerSelection!="rock") ||
-      (playerSelection!="scissors") ||
-      (playerSelection!="paper")
-    )
+  if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
     {
     return "please enter a valid choice; choices are either rock, paper, or scissors";
     }
