@@ -1,13 +1,18 @@
 /*
 computer play has array of values
-randomly returns one
+randomly returns one: rock paper or scissors
+
 play round takes player selection and computer selection
 turn player selection to lower case
-check to make sure player selection valid
+check to make sure player selection valid -- this has been moved to "game()" function
 pick one of the 3 for computer selection 
 checks for tie
 evaluate all win cases for player
 else return loss
+
+game loops for set number of times
+gets player input using prompt
+checks player input for validity
 */
 
 function computerPlay(){
@@ -21,12 +26,8 @@ function end_message(result,winpick,losepick){
 }
 
 function playRound(playerSelection, computerSelection){
-  playerSelection = playerSelection.toLowerCase();
-  //evaluates player input for validity
-  if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
-    {
-    return "please enter a valid choice; choices are either rock, paper, or scissors";
-    }
+  //checks to see if player or computer wins
+  //all inputs should be checked for validity before being handed to this function
   //checks for tie case
   if (playerSelection == computerSelection){
     return `Tie! You both picked ${playerSelection}`;
@@ -46,7 +47,21 @@ function playRound(playerSelection, computerSelection){
   }
 }
 
-let playerSelection = "rock";
-let computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+function game(){
+  for (let i = 0; i < 5; i++) {
+    let playerSelection = prompt('pick an option: rock paper or scissors')
+    playerSelection = playerSelection.toLowerCase();
+    //evaluates player input for validity
+    if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
+      {
+      alert("please enter a valid choice: rock, paper, or scissors");
+      i=-1;
+      continue;
+      }
+  }
+}
+
+// let playerSelection = "rock";
+// let computerSelection = computerPlay();
+// console.log(playRound(playerSelection, computerSelection));
 
