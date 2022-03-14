@@ -13,6 +13,9 @@ else return loss
 game loops for set number of times
 gets player input using prompt
 checks player input for validity
+starts loop
+  calls play round
+end loop
 */
 
 function computerPlay(){
@@ -30,7 +33,10 @@ function playRound(playerSelection, computerSelection){
   //all inputs should be checked for validity before being handed to this function
   //checks for tie case
   if (playerSelection == computerSelection){
-    return `Tie! You both picked ${playerSelection}`;
+    //the original string return values have been moved to the game() function for wins, loses, and ties
+    //I've left the original return statements for clarity
+    //return `Tie! You both picked ${playerSelection}`;
+    return 0;
   }
   //eval all win cases here
   if (
@@ -38,30 +44,65 @@ function playRound(playerSelection, computerSelection){
     ((playerSelection=="scissors")&&(computerSelection=="paper")) ||
     ((playerSelection=="paper")&&(computerSelection=="rock"))
     ){
-      return end_message("win",playerSelection,computerSelection);
+      //return end_message("win",playerSelection,computerSelection);
+      return 1;
     }
   //if we've checked for a tie and we'be checked for a win;
   //it's safe to say the player lost!
   else {
-    return end_message("lose",computerSelection,playerSelection);
+    //return end_message("lose",computerSelection,playerSelection);
+    return 2;
   }
 }
 
 function game(){
+  let playerScore = 0;
+  let computerScore = 0;
+
   for (let i = 0; i < 5; i++) {
     let playerSelection = prompt('pick an option: rock paper or scissors')
-    playerSelection = playerSelection.toLowerCase();
     //evaluates player input for validity
+    try{
+      playerSelection = playerSelection.toLowerCase();
+    }
+    catch(err){
+      alert("please enter a valid choice: rock, paper, or scissors");
+    }
     if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
       {
       alert("please enter a valid choice: rock, paper, or scissors");
-      i=-1;
-      continue;
+      i=-1; continue;
       }
+    
+    //now that player input is good, we can proceed with playing the round
+    let computerSelection = computerPlay();
+    let result = playRound(playerSelection, computerSelection);
+    switch(result){
+      case 0:
+        console.log(`Tie! You both picked ${playerSelection}! Re-doing round...`);
+        i=i-1; 
+        continue;
+      case 1:
+        console.log(end_message("win",playerSelection,computerSelection))
+        playerScore++;
+        break;
+      case 2:
+        console.log(end_message("lose",computerSelection,playerSelection))
+        computerScore++;
+        break;
+      default:
+        throw `playRound returned a bad number -- the code should never get here: player input = ${playerSelection}, computer input = ${computerSelection}`;
+    }
   }
+  if (playerScore > computerScore){
+    return `You win!\nPlayer Score: ${playerScore}\nComputer Score: ${computerScore}`
+  }
+  else{
+    return `You lose!\nPlayer Score: ${playerScore}\nComputer Score: ${computerScore}`
+  }
+
 }
 
-// let playerSelection = "rock";
-// let computerSelection = computerPlay();
-// console.log(playRound(playerSelection, computerSelection));
+console.log(game());
+
 
