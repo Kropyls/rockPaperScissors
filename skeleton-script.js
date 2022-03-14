@@ -16,6 +16,8 @@ checks player input for validity
 starts loop
   calls play round
 end loop
+
+return winner
 */
 
 function computerPlay(){
