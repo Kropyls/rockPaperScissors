@@ -112,7 +112,7 @@ function game(){
     currentRnd++;
     
     //now that player input is good, we can proceed with playing the round
-    let computerSelection = "scissors";//computerPlay();
+    let computerSelection = computerPlay();
     let result = playRound(playerSelection, computerSelection);
     switch(result){
       case 0:
