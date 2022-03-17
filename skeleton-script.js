@@ -102,6 +102,7 @@ function game(){
     catch(err){
       alert("please enter a valid choice: rock, paper, or scissors");
     }
+    //still evaling player input
     if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
       {
       alert("please enter a valid choice: rock, paper, or scissors");
@@ -116,22 +117,29 @@ function game(){
     let result = playRound(playerSelection, computerSelection);
     switch(result){
       case 0:
+        //tie case
         console.log(`Tie! You both picked ${playerSelection}! Re-doing round...`);
         i=i-1; 
+        //troubleshooting variable logging
         currentRnd = currentRnd - 1;
         console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
         continue;
       case 1:
+        //player win case
         console.log(end_message("win",playerSelection,computerSelection))
         playerScore++;
+        //troubleshooting variable logging
         console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
         break;
       case 2:
+        //player lose case
         console.log(end_message("lose",computerSelection,playerSelection))
         computerScore++;
+        //troubleshooting variable logging
         console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
         break;
       default:
+        //in case I for some reason modify the play round function, this should catch me being stupid
         throw `playRound returned a bad number -- the code should never get here: player input = ${playerSelection}, computer input = ${computerSelection}`;
     }
   }
