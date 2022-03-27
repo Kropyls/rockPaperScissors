@@ -20,15 +20,19 @@ end loop
 return winner
 */
 
-/*
-The counter value is being removed, but I will be leaving this comment here
-for the time being to document the issue for if I bring it back:
+let playerScore = document.getElementById("PS");
+let computerScore = document.getElementById("CS");
+let log = document.getElementById("log")
 
-A bug occurs when the counter value i, resets itself to 0.
-I have no idea why it does this as of now but I have caught a log of it
-happening. So far I have not been able to steadily reproduce the problem.
+const buttons = document.getElementsByClassName("rps-buttons");
 
-*/
+Array.from(buttons).forEach(btn => {
+  btn.addEventListener('click', function(){
+    playGame(btn.textContent, computerPlay())
+  })
+})
+
+
 
 function computerPlay(){
   let choices = ['rock','paper','scissors'];
@@ -42,7 +46,8 @@ function end_message(result,winpick,losepick){
 
 function playRound(playerSelection, computerSelection){
   //checks to see if player or computer wins
-  //all inputs should be checked for validity before being handed to this function
+  playerSelection = playerSelection.toLowerCase();
+
   //checks for tie case
   if (playerSelection == computerSelection){
     //the original string return values have been moved to the game() function for wins, loses, and ties
@@ -67,73 +72,27 @@ function playRound(playerSelection, computerSelection){
   }
 }
 
-function game(){
-  let playerScore = 0;
-  let computerScore = 0;
-
-  //temp variables for T/S
-  let totalRndPlayed = 0;
-  let currentRnd = 0;
-
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt('pick an option: rock paper or scissors')
-    //evaluates player input for validity
-    try{
-      playerSelection = playerSelection.toLowerCase();
-    }
-    catch(err){
-      alert("please enter a valid choice: rock, paper, or scissors");
-    }
-    //still evaling player input
-    if ((playerSelection!="rock") && (playerSelection!="scissors") && (playerSelection!="paper"))
-      {
-      alert("please enter a valid choice: rock, paper, or scissors");
-      i=-1; continue;
-      }
-
-    totalRndPlayed++;
-    currentRnd++;
-    
-    //now that player input is good, we can proceed with playing the round
-    let computerSelection = computerPlay();
-    let result = playRound(playerSelection, computerSelection);
-    switch(result){
-      case 0:
-        //tie case
-        console.log(`Tie! You both picked ${playerSelection}! Re-doing round...`);
-        i=i-1; 
-        //troubleshooting variable logging
-        currentRnd = currentRnd - 1;
-        console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
-        continue;
-      case 1:
-        //player win case
-        console.log(end_message("win",playerSelection,computerSelection))
-        playerScore++;
-        //troubleshooting variable logging
-        console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
-        break;
-      case 2:
-        //player lose case
-        console.log(end_message("lose",computerSelection,playerSelection))
-        computerScore++;
-        //troubleshooting variable logging
-        console.log(`\nTotal Rounds: ${totalRndPlayed}\nCurrent Round: ${currentRnd}\ni = ${i}\n`);
-        break;
-      default:
-        //in case I for some reason modify the play round function, this should catch me being stupid
-        throw `playRound returned a bad number -- the code should never get here: player input = ${playerSelection}, computer input = ${computerSelection}`;
-    }
+function playGame(playerSelection, computerSelection){
+  let msg;
+  switch(playRound(playerSelection,computerSelection)){
+    case 0:
+      //tie
+      msg = `Tie! You both picked ${playerSelection}`;
+      log.textContent = msg;
+      break;
+    case 1:
+      //player win
+      playerScore.textContent = parseInt(playerScore.textContent) + 1;
+      msg = end_message('win', playerSelection, computerSelection);
+      log.textContent = msg;
+      break;
+    case 2:
+      //player loose
+      computerScore.textContent = parseInt(computerScore.textContent) + 1;
+      msg = end_message('lose', computerSelection, playerSelection);
+      log.textContent = msg;
+      break;
   }
-  if (playerScore > computerScore){
-    return `You win!\nPlayer Score: ${playerScore}\nComputer Score: ${computerScore}`
-  }
-  else{
-    return `You lose!\nPlayer Score: ${playerScore}\nComputer Score: ${computerScore}`
-  }
-
+  //check for total score here
 }
-
-//console.log(game());
-
 
