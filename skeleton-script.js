@@ -3,23 +3,17 @@ computer play has array of values
 randomly returns one: rock paper or scissors
 
 play round takes player selection and computer selection
-turn player selection to lower case
-check to make sure player selection valid -- this has been moved to "game()" function
-pick one of the 3 for computer selection 
 checks for tie
 evaluate all win cases for player
 else return loss
 
-game loops for set number of times
-gets player input using prompt
-checks player input for validity
-starts loop
-  calls play round
-end loop
+play game is basically just a switch case for play round
+it generates win and lose messages for the log and
+adds to the score tally's in the html document
 
-return winner
+
 */
-
+//assigns variables to interface with webpage
 let playerScore = document.getElementById("PS");
 let computerScore = document.getElementById("CS");
 let log = document.getElementById("log")
