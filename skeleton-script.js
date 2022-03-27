@@ -21,31 +21,13 @@ return winner
 */
 
 /*
-This is an accounting for an issue that showed up one night
-I cannot reproduce it, but I will leave this here in case it 
-show up again so I can work to isolate what might be causing
-it
+The counter value is being removed, but I will be leaving this comment here
+for the time being to document the issue for if I bring it back:
 
-bug showed up with the following play:
-R player - com      = score
-
-W rock   - scissors = p1c0
-T rock   - rock     = p1c0
-T rock   - rock     = p1c0
-L rock   - paper    = p1c1
-T rock   - rock     = p1c1
-L rock   - paper    = p1c2
-L rock   - paper    = p1c3
-W rock   - scissors = p2c3
-L rock    - paper   = p2c4
-
-reported score: P2C4
-
-UPDATE: This bug occurs when the counter value i, resets itself to 0.
+A bug occurs when the counter value i, resets itself to 0.
 I have no idea why it does this as of now but I have caught a log of it
 happening. So far I have not been able to steadily reproduce the problem.
 
-I'm going to commit this as is so I have a document of the issue
 */
 
 function computerPlay(){
