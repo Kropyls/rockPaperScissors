@@ -39,14 +39,11 @@ function end_message(result,winpick,losepick){
 }
 
 function playRound(playerSelection, computerSelection){
-  //checks to see if player or computer wins
+  //converts selection to lowercase from buttons
   playerSelection = playerSelection.toLowerCase();
 
   //checks for tie case
   if (playerSelection == computerSelection){
-    //the original string return values have been moved to the game() function for wins, loses, and ties
-    //I've left the original return statements for clarity
-    //return `Tie! You both picked ${playerSelection}`;
     return 0;
   }
   //eval all win cases here
@@ -55,19 +52,18 @@ function playRound(playerSelection, computerSelection){
     ((playerSelection=="scissors")&&(computerSelection=="paper")) ||
     ((playerSelection=="paper")&&(computerSelection=="rock"))
     ){
-      //return end_message("win",playerSelection,computerSelection);
       return 1;
     }
   //if we've checked for a tie and we'be checked for a win;
   //it's safe to say the player lost!
   else {
-    //return end_message("lose",computerSelection,playerSelection);
     return 2;
   }
 }
 
 function playGame(playerSelection, computerSelection){
   let msg;
+  //takes the playround function and evalutes the output for win, loss or tie
   switch(playRound(playerSelection,computerSelection)){
     case 0:
       //tie
@@ -87,6 +83,18 @@ function playGame(playerSelection, computerSelection){
       log.textContent = msg;
       break;
   }
-  //check for total score here
+
+  //checks if either player hit 5 points and resets the game if so
+  if(playerScore.textContent == '5'){
+    alert("You win! Click okay to play again");
+    playerScore.textContent = '0';
+    computerScore.textContent = '0';
+  }
+  else if(computerScore.textContent == '5'){
+    alert("You lose! Click okay to play again");
+    playerScore.textContent = '0';
+    computerScore.textContent = '0';
+  }
+
 }
 
