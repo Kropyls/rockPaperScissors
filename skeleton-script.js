@@ -26,7 +26,8 @@ Array.from(buttons).forEach(btn => {
   })
 })
 
-
+let scoreForPlayer = 0;
+let scoreForCom = 0;
 
 function computerPlay(){
   let choices = ['rock','paper','scissors'];
@@ -72,26 +73,32 @@ function playGame(playerSelection, computerSelection){
       break;
     case 1:
       //player win
-      playerScore.textContent = parseInt(playerScore.textContent) + 1;
+      scoreForPlayer++;
+      playerScore.textContent = scoreForPlayer;
       msg = end_message('win', playerSelection, computerSelection);
       log.textContent = msg;
       break;
     case 2:
       //player loose
-      computerScore.textContent = parseInt(computerScore.textContent) + 1;
+      scoreForCom++;
+      computerScore.textContent = scoreForCom;
       msg = end_message('lose', computerSelection, playerSelection);
       log.textContent = msg;
       break;
   }
 
   //checks if either player hit 5 points and resets the game if so
-  if(playerScore.textContent == '5'){
+  if(scoreForPlayer == 5){
     alert("You win! Click okay to play again");
+    scoreForCom = 0;
+    scoreForPlayer = 0;
     playerScore.textContent = '0';
     computerScore.textContent = '0';
   }
-  else if(computerScore.textContent == '5'){
+  else if(scoreForCom == 5){
     alert("You lose! Click okay to play again");
+    scoreForCom = 0;
+    scoreForPlayer = 0;
     playerScore.textContent = '0';
     computerScore.textContent = '0';
   }
